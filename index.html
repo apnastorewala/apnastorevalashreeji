@@ -52,7 +52,7 @@
         </div>
     </header>
 
-    <!-- 3. Category Filter Pills & Product Grid -->
+    <!-- 2. Category Filter Pills & Product Grid -->
     <main class="max-w-7xl mx-auto px-4 py-8 flex-grow" id="products">
         <div class="flex items-center justify-between flex-wrap gap-4 mb-6">
             <h2 class="text-2xl font-bold text-gray-800">Daily Groceries</h2>
@@ -70,7 +70,7 @@
         </div>
     </main>
 
-    <!-- 4. Shopping Cart Sidebar Overlay -->
+    <!-- 3. Shopping Cart Sidebar Overlay -->
     <div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden transition-opacity" onclick="toggleCart()"></div>
 
     <!-- Sliding Cart Drawer -->
@@ -93,7 +93,7 @@
         </div>
     </aside>
 
-    <!-- 5. Checkout Modal -->
+    <!-- 4. Checkout Modal -->
     <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeCheckout()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
@@ -126,7 +126,7 @@
         </div>
     </div>
 
-    <!-- 6. Owner Admin Orders Modal -->
+    <!-- 5. Owner Admin Orders Modal -->
     <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[90vh] flex flex-col">
             <div class="flex justify-between items-center mb-4 border-b pb-3">
@@ -172,7 +172,7 @@
         let ordersList = JSON.parse(localStorage.getItem('kirana_admin_orders')) || [];
         let currentCategory = 'All';
 
-        // Initialize App on Load (YE LINE PRODUCTS DIKHANAYEGI)
+        // Initialize App on Load
         window.onload = function() {
             renderProducts(products);
             updateCartUI();
@@ -183,7 +183,7 @@
             const grid = document.getElementById('productGrid');
             grid.innerHTML = '';
 
-            if (list.length === 0) {
+            if (!list || list.length === 0) {
                 grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-10">Koi saman nahi mila.</p>`;
                 return;
             }
@@ -370,3 +370,4 @@
             };
 
             ordersList.unshift(newOrder);
+            localStor
