@@ -350,7 +350,7 @@
         }
 
         // Place Order
-        async function placeOrder(e) {
+                async function placeOrder(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             btn.disabled = true;
@@ -361,4 +361,110 @@
             const address = document.getElementById('custAddress').value;
             const payMethod = document.getElementById('payMethod').value;
 
-            let
+            let total = 0;
+            let itemsSummary = "";
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
+                itemsSummary += `• ${item.name} x ${item.qty} = ₹${itemTotal}\n`;
+            });
+
+            const newOrder = {
+                id: 'ORD' + Date.now().toString().slice(-6),
+                date: new Date().toLocaleString(),
+                customer: { name, phone, address },
+                items: cart,
+                total: total,
+                payment: payMethod
+            };
+
+            ordersList.unshift(newOrder);
+            localStorage.setItem('kirana_admin_orders', JSON.stringify(ordersList));
+
+            const message = `🛒 *NEW ORDER RECEIVED!* 🛒\n\n` +
+                            `👤 *Name:* ${name}\n` +
+                            `📞 *Phone:* ${phone}\n` +
+                            `🏠 *Address:* ${address}\n` +
+                            `💳 *Payment:* ${payMethod}\n\n` +
+                            `📦 *ORDER ITEMS:*\n${itemsSummary}\n` +
+                            `💰 *TOTAL AMOUNT:* ₹${total}`;
+
+            try {
+                if(TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+                    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: message,
+                            parse_mode: 'Markdown'
+                        })
+                    });
+                }
+            } catch (err) {
+                console.log("Telegram notification failed:", err);
+            }
+
+            alert("🎉 Thank you! Aapka Order Successfully Place ho gaya hai.");
+            cart = [];
+            saveCart();
+            updateCartUI();
+            closeCheckout();
+            
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-bag-shopping"></i> Place Order Now`;
+        }
+
+        // Admin Panel Functions
+        function openAdminModal() {
+            renderAdminOrders();
+            document.getElementById('adminModal').classList.remove('hidden');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+
+        function renderAdminOrders() {
+            const list = document.getElementById('adminOrdersList');
+            list.innerHTML = '';
+
+            if (ordersList.length === 0) {
+                list.innerHTML = `<p class="text-gray-500 text-center py-8">Koi order nahi mila.</p>`;
+                return;
+            }
+
+            ordersList.forEach(order => {
+                let itemsHtml = order.items.map(i => `<li class="text-xs text-gray-600">${i.name} (x${i.qty}) - ₹${i.price * i.qty}</li>`).join('');
+                list.innerHTML += `
+                    <div class="border rounded-lg p-4 bg-gray-50 shadow-sm">
+                        <div class="flex justify-between items-center mb-2 border-b pb-2">
+                            <span class="font-bold text-sm text-green-700">${order.id}</span>
+                            <span class="text-xs text-gray-500">${order.date}</span>
+                        </div>
+                        <p class="text-xs font-semibold text-gray-800">Customer: ${order.customer.name} (${order.customer.phone})</p>
+                        <p class="text-xs text-gray-600 mb-2">Address: ${order.customer.address}</p>
+                        <ul class="list-disc list-inside mb-2 bg-white p-2 rounded border">
+                            ${itemsHtml}
+                        </ul>
+                        <div class="flex justify-between items-center text-xs font-bold pt-1">
+                            <span>Payment: ${order.payment}</span>
+                            <span class="text-green-600 text-sm">Total: ₹${order.total}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function clearAllOrders() {
+            if(confirm("Kya aap saare local orders delete karna chahte hain?")) {
+                ordersList = [];
+                localStorage.removeItem('kirana_admin_orders');
+                renderAdminOrders();
+                updateCartUI();
+            }
+                               }
+        
+
+        
