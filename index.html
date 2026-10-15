@@ -162,23 +162,22 @@
 
     <!-- JavaScript Logic -->
     <script>
-        // -------------------------------------------------------------
-        // 🔴 YAHAN APNA TELEGRAM BOT TOKEN AUR CHAT ID DAALEIN
-        // -------------------------------------------------------------
+        // 
         const TELEGRAM_BOT_TOKEN = "8955915195:AAELKsPmB8C0FOUZ8ru0J4FcnScQajJtfA8";
         const TELEGRAM_CHAT_ID = "8391325461"; 
 
-        // Kirana Product Inventory
+                // Kirana Product Inventory
         const products = [
-            { id: 1, name: "Atta (5kg)", category: "Anaj & Dal", price: 200, oldPrice: 290, unit: "5 kg", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400" },
+            { id: 1, name: "Atta (5kg)", category: "Anaj & Dal", price: 200, oldPrice: 290, unit: "5 kg", image: "https://i.ibb.co/qYW2hVFB/IMG20261015172500.jpg" },
             { id: 2, name: "Basmati Rice (1kg)", category: "Anaj & Dal", price: 95, oldPrice: 120, unit: "1 kg", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400" },
-            { id: 3, name: "Toor Dal / Arhar Dal (1kg)", category: "Anaj & Dal", price: 140, oldPrice: 160, unit: "1 kg", image: "https://images.unsplash.com/photo-1585998014293-21bb3457a410?w=400" },
-            { id: 4, name: "Fortune Mustard Oil (1L)", category: "Tel & Masale", price: 150, oldPrice: 175, unit: "1 Liter", image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400" },
+            { id: 3, name: "Toor Dal (1kg)", category: "Anaj & Dal", price: 140, oldPrice: 160, unit: "1 kg", image: "https://images.unsplash.com/photo-1585998014293-21bb3457a410?w=400" },
+            { id: 4, name: "Mustard Oil (1L)", category: "Tel & Masale", price: 150, oldPrice: 175, unit: "1 Liter", image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400" },
             { id: 5, name: "Tata Salt (1kg)", category: "Tel & Masale", price: 28, oldPrice: 30, unit: "1 kg", image: "https://images.unsplash.com/photo-1518112347513-74d98b470942?w=400" },
-            { id: 6, name: "Haldi / Turmeric Powder (200g)", category: "Tel & Masale", price: 45, oldPrice: 55, unit: "200 g", image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400" },
-            { id: 7, name: "Chings Namkeen / Snacks", category: "Snacks", price: 20, oldPrice: 25, unit: "Packet", image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400" },
-            { id: 8, name: "Brooke Bond Red Label Tea (250g)", category: "Snacks", price: 145, oldPrice: 160, unit: "250 g", image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400" }
+            { id: 6, name: "Haldi Powder (200g)", category: "Tel & Masale", price: 45, oldPrice: 55, unit: "200 g", image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400" },
+            { id: 7, name: "Namkeen", category: "Snacks", price: 20, oldPrice: 25, unit: "Packet", image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400" },
+            { id: 8, name: "Red Label Tea (250g)", category: "Snacks", price: 145, oldPrice: 160, unit: "250 g", image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400" }
         ];
+        
 
         // Local Storage
         let cart = JSON.parse(localStorage.getItem('kirana_cart')) || [];
