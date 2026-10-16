@@ -1,375 +1,355 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shree Ji Kirana Store - Aapki Apni Dukan</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .cart-slide {
-            transition: transform 0.3s ease-in-out;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shree Ji Kirana Store - Aapki Apni Dukan</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .cart-slide {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col justify-between">
 
-    <!-- 1. Header / Navbar -->
-    <header class="sticky top-0 z-40 bg-white shadow-md">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-            <!-- Brand Logo -->
-            <a href="#" class="text-2xl font-extrabold text-green-600 flex items-center gap-2">
-                <i class="fa-solid fa-basket-shopping"></i> Shree Ji Kirana
-            </a>
+    <!-- 1. Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            <!-- Brand Logo -->
+            <a href="#" class="text-2xl font-extrabold text-green-600 flex items-center gap-2">
+                <i class="fa-solid fa-basket-shopping"></i> Shree Ji Kirana
+            </a>
 
-            <!-- Search Bar -->
-            <div class="flex-1 max-w-md hidden sm:block relative">
-                <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Dal, Atta, Tel khojein..." 
-                       class="w-full pl-10 pr-4 py-2 border rounded-full border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm">
-                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400 text-sm"></i>
-            </div>
-<script>
-    alert("JavaScript chal gayi!"); // Yeh phone par pop-up laayega
-    
-            <div class="flex items-center gap-3">
-                <!-- Owner Orders Button -->
-                <button onclick="openAdminModal()" class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-blue-700 transition flex items-center gap-1">
-                    <i class="fa-solid fa-box-archive"></i> Admin Orders (<span id="adminOrderCount">0</span>)
-                </button>
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-md hidden sm:block relative">
+                <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Dal, Atta, Tel khojein..." 
+                       class="w-full pl-10 pr-4 py-2 border rounded-full border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400 text-sm"></i>
+            </div>
 
-                <!-- Cart Icon Button -->
-                <button onclick="toggleCart()" class="relative p-2 text-gray-700 hover:text-green-600 transition">
-                    <i class="fa-solid fa-cart-shopping text-2xl"></i>
-                    <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">0</span>
-                </button>
-            </div>
-        </div>
+            <!-- Cart Icon Button -->
+            <button onclick="toggleCart()" class="relative p-2 text-gray-700 hover:text-green-600 transition">
+                <i class="fa-solid fa-cart-shopping text-2xl"></i>
+                <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+            </button>
+        </div>
 
-        <!-- Mobile Search Bar -->
-        <div class="px-4 pb-3 sm:hidden">
-            <input type="text" id="mobileSearchInput" oninput="filterProductsMobile()" placeholder="Dal, Atta, Tel khojein..." 
-                   class="w-full pl-10 pr-4 py-2 border rounded-full border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm">
-        </div>
-    </header>
+        <!-- Mobile Search Bar -->
+        <div class="px-4 pb-3 sm:hidden">
+            <input type="text" id="mobileSearchInput" oninput="filterProductsMobile()" placeholder="Dal, Atta, Tel khojein..." 
+                   class="w-full pl-10 pr-4 py-2 border rounded-full border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm">
+        </div>
+    </header>
 
-    <!-- 2. Category Filter Pills & Product Grid -->
-    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow" id="products">
-        <div class="flex items-center justify-between flex-wrap gap-4 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Daily Groceries</h2>
-            <div class="flex gap-2 overflow-x-auto pb-2" id="categoryButtons">
-                <button onclick="selectCategory('All')" class="cat-btn bg-green-600 text-white px-4 py-1.5 rounded-full text-sm font-medium transition">All</button>
-                <button onclick="selectCategory('Anaj & Dal')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-green-600 hover:text-white px-4 py-1.5 rounded-full text-sm font-medium transition">Anaj</button>
-                <button onclick="selectCategory('Tel & Masale')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-green-600 hover:text-white px-4 py-1.5 rounded-full text-sm font-medium transition">Tel & Masale</button>
-                <button onclick="selectCategory('Snacks')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-green-600 hover:text-white px-4 py-1.5 rounded-full text-sm font-medium transition">Snacks</button>
-            </div>
-        </div>
+    <!-- 2. Hero Banner -->
+    <section class="bg-gradient-to-r from-green-600 to-emerald-700 text-white py-12 px-4 text-center">
+        <h1 class="text-3xl md:text-5xl font-bold mb-3">Shuddh aur Taaza Rashan 🛒</h1>
+        <p class="text-green-100 text-base md:text-lg max-w-2xl mx-auto mb-6">Ghar baithe mangayein apni rozmarra ki zaroorat ka saaman. Tez home delivery uplabdh hai!</p>
+        <a href="#products" class="bg-white text-green-700 font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-gray-100 transition">Saaman Dekhein</a>
+    </section>
 
-        <!-- Product Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="productGrid">
-            <!-- Products rendered dynamically -->
-        </div>
-    </main>
+    <!-- 3. Category Filter Pills -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow" id="products">
+        <div class="flex items-center justify-between flex-wrap gap-4 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Daily Groceries</h2>
+            <div class="flex gap-2 overflow-x-auto pb-2" id="categoryButtons">
+                <button onclick="selectCategory('All')" class="cat-btn bg-green-600 text-white px-4 py-1.5 rounded-full text-sm font-medium transition">All</button>
+                <button onclick="selectCategory('Anaj & Dal')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-green-600 hover:text-white px-4 py-1.5 rounded-full text-sm font-medium transition">Anaj</button>
+                <button onclick="selectCategory('Tel & Masale')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-green-600 hover:text-white px-4 py-1.5 rounded-full text-sm font-medium transition">Tel & Masale</button>
+                <button onclick="selectCategory('Snacks')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-green-600 hover:text-white px-4 py-1.5 rounded-full text-sm font-medium transition">Snacks</button>
+            </div>
+        </div>
 
-    <!-- 3. Shopping Cart Sidebar Overlay -->
-    <div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden transition-opacity" onclick="toggleCart()"></div>
+        <!-- Product Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="productGrid">
+            <!-- Products rendered dynamically -->
+        </div>
+    </main>
 
-    <!-- Sliding Cart Drawer -->
-    <aside id="cartDrawer" class="fixed top-0 right-0 w-full sm:w-96 h-full bg-white z-50 shadow-2xl flex flex-col translate-x-full cart-slide">
-        <div class="p-4 bg-green-600 text-white flex justify-between items-center">
-            <h3 class="text-lg font-bold"><i class="fa-solid fa-cart-shopping"></i> Aapka Cart</h3>
-            <button onclick="toggleCart()" class="text-white hover:text-gray-200 text-xl"><i class="fa-solid fa-xmark"></i></button>
-        </div>
+    <!-- 4. Shopping Cart Sidebar Overlay -->
+    <div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden transition-opacity" onclick="toggleCart()"></div>
 
-        <div class="p-4 flex-1 overflow-y-auto space-y-4" id="cartItemsList">
-            <p class="text-gray-500 text-center py-8">Aapka cart abhi khali hai.</p>
-        </div>
+    <!-- Sliding Cart Drawer -->
+    <aside id="cartDrawer" class="fixed top-0 right-0 w-full sm:w-96 h-full bg-white z-50 shadow-2xl flex flex-col translate-x-full cart-slide">
+        <!-- Cart Header -->
+        <div class="p-4 bg-green-600 text-white flex justify-between items-center">
+            <h3 class="text-lg font-bold"><i class="fa-solid fa-cart-shopping"></i> Aapka Cart</h3>
+            <button onclick="toggleCart()" class="text-white hover:text-gray-200 text-xl"><i class="fa-solid fa-xmark"></i></button>
+        </div>
 
-        <div class="p-4 border-t bg-gray-50">
-            <div class="flex justify-between items-center text-lg font-bold mb-4">
-                <span>Total Amount:</span>
-                <span id="cartTotal" class="text-green-600">₹0</span>
-            </div>
-            <button onclick="openCheckout()" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">Proceed to Checkout</button>
-        </div>
-    </aside>
+        <!-- Cart Items List -->
+        <div class="p-4 flex-1 overflow-y-auto space-y-4" id="cartItemsList">
+            <p class="text-gray-500 text-center py-8">Aapka cart abhi khali hai.</p>
+        </div>
 
-    <!-- 4. Checkout Modal -->
-    <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeCheckout()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-xl font-bold mb-4 text-gray-800">Order Complete Karein</h3>
-            
-            <form onsubmit="placeOrder(event)" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                    <input type="text" id="custName" required class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-green-500 outline-none">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                    <input type="tel" id="custPhone" required class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-green-500 outline-none" placeholder="10-digit mobile number">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Delivery Address & House No.</label>
-                    <textarea id="custAddress" required rows="2" class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-green-500 outline-none"></textarea>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
-                    <select id="payMethod" class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-green-500 outline-none">
-                        <option>Cash on Delivery (COD)</option>
-                        <option>Online UPI Payment</option>
-                    </select>
-                </div>
-                <button type="submit" id="submitBtn" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition mt-2 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-bag-shopping"></i> Place Order Now
-                </button>
-            </form>
-        </div>
-    </div>
+        <!-- Cart Footer -->
+        <div class="p-4 border-t bg-gray-50">
+            <div class="flex justify-between items-center text-lg font-bold mb-4">
+                <span>Total Amount:</span>
+                <span id="cartTotal" class="text-green-600">₹0</span>
+            </div>
+            <button onclick="openCheckout()" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">Proceed to Checkout</button>
+        </div>
+    </aside>
 
-    <!-- 5. Owner Admin Orders Modal -->
-    <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[90vh] flex flex-col">
-            <div class="flex justify-between items-center mb-4 border-b pb-3">
-                <h3 class="text-xl font-bold text-gray-800"><i class="fa-solid fa-user-shield text-blue-600"></i> Owner Panel - All Orders</h3>
-                <button onclick="closeAdminModal()" class="text-gray-400 hover:text-gray-600 text-xl"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            
-            <div class="flex-1 overflow-y-auto space-y-4" id="adminOrdersList">
-                <!-- Orders will load here -->
-            </div>
+    <!-- 5. Checkout Modal -->
+    <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeCheckout()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-xl font-bold mb-4 text-gray-800">Order Complete Karein</h3>
+            
+            <form onsubmit="placeOrder(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" id="custName" required class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-green-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Delivery Address & House No.</label>
+                    <textarea id="custAddress" required rows="2" class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-green-500 outline-none"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
+                    <select id="payMethod" class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-green-500 outline-none">
+                        <option>Cash on Delivery (COD)</option>
+                        <option>Online UPI Payment</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition mt-2 flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-xl"></i> WhatsApp Par Order Bhejein
+                </button>
+            </form>
+        </div>
+    </div>
 
-            <div class="mt-4 pt-3 border-t flex justify-between items-center">
-                <button onclick="clearAllOrders()" class="bg-red-100 text-red-600 px-4 py-2 rounded-lg text-xs font-semibold hover:bg-red-200 transition">Clear Local Orders</button>
-                <button onclick="closeAdminModal()" class="bg-gray-800 text-white px-5 py-2 rounded-lg text-sm font-semibold">Close</button>
-            </div>
-        </div>
-    </div>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-6 text-center text-sm border-t border-gray-700 mt-12">
+        <p>&copy; 2026 Shree Ji Kirana Store. Sabhi adhikar surakshit hain.</p>
+    </footer>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-gray-300 py-6 text-center text-sm border-t border-gray-700 mt-12">
-        <p>&copy; 2026 Shree Ji Kirana Store. Sabhi adhikar surakshit hain.</p>
-    </footer>
+    <!-- JavaScript Logic -->
+    <script>
+        // Kirana Product Inventory
+        const products = [
+            { id: 1, name: "Aaaata  (5kg)", category: "Anaj & Dal", price: 200, oldPrice: 290, unit: "3 kg", image: "https://i.ibb.co/qYW2hVFB/IMG20261015172500.jpg"
 
-    <!-- JavaScript Logic -->
-    <script>
-        const TELEGRAM_BOT_TOKEN = "89555195:AAELKsPmB8C0FOUZ8ru0J4FfA8";
-        const TELEGRAM_CHAT_ID = "8461"; 
+            { id: 2, name: "Basmati Rice (1kg)", category: "Anaj & Dal", price: 95, oldPrice: 120, unit: "1 kg", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400" },
+            { id: 3, name: "Toor Dal / Arhar Dal (1kg)", category: "Anaj & Dal", price: 140, oldPrice: 160, unit: "1 kg", image: "https://images.unsplash.com/photo-1585998014293-21bb3457a410?w=400" },
+            { id: 4, name: "Fortune Mustard Oil (1L)", category: "Tel & Masale", price: 150, oldPrice: 175, unit: "1 Liter", image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400" },
+            { id: 5, name: "Tata Salt (1kg)", category: "Tel & Masale", price: 28, oldPrice: 30, unit: "1 kg", image: "https://images.unsplash.com/photo-1518112347513-74d98b470942?w=400" },
+            { id: 6, name: "Haldi / Turmeric Powder (200g)", category: "Tel & Masale", price: 45, oldPrice: 55, unit: "200 g", image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400" },
+            { id: 7, name: "Chings Namkeen / Snacks", category: "Snacks", price: 20, oldPrice: 25, unit: "Packet", image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400" },
+            { id: 8, name: "Brooke Bond Red Label Tea (250g)", category: "Snacks", price: 145, oldPrice: 160, unit: "250 g", image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400" }
+        ];
 
-        // Kirana Product Inventory
-        const products = [
-            { id: 1, name: "Atta (5kg)", category: "Anaj & Dal", price: 200, oldPrice: 290, unit: "5 kg", image: "https://i.ibb.co/qYW2hVFB/IMG20261015172500.jpg" },
-            { id: 2, name: "Basmati Rice (1kg)", category: "Anaj & Dal", price: 95, oldPrice: 120, unit: "1 kg", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400" },
-            { id: 3, name: "Toor Dal (1kg)", category: "Anaj & Dal", price: 140, oldPrice: 160, unit: "1 kg", image: "https://images.unsplash.com/photo-1585998014293-21bb3457a410?w=400" },
-            { id: 4, name: "Mustard Oil (1L)", category: "Tel & Masale", price: 150, oldPrice: 175, unit: "1 Liter", image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400" },
-            { id: 5, name: "Tata Salt (1kg)", category: "Tel & Masale", price: 28, oldPrice: 30, unit: "1 kg", image: "https://images.unsplash.com/photo-1518112347513-74d98b470942?w=400" },
-            { id: 6, name: "Haldi Powder (200g)", category: "Tel & Masale", price: 45, oldPrice: 55, unit: "200 g", image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400" },
-            { id: 7, name: "Namkeen", category: "Snacks", price: 20, oldPrice: 25, unit: "Packet", image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400" },
-            { id: 8, name: "Red Label Tea (250g)", category: "Snacks", price: 145, oldPrice: 160, unit: "250 g", image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400" }
-        ];
+        // Load cart from Local Storage if available
+        let cart = JSON.parse(localStorage.getItem('kirana_cart')) || [];
+        let currentCategory = 'All';
 
-        // Local Storage
-        let cart = JSON.parse(localStorage.getItem('kirana_cart')) || [];
-        let ordersList = JSON.parse(localStorage.getItem('kirana_admin_orders')) || [];
-        let currentCategory = 'All';
+        // Render Products
+        function renderProducts(list) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
 
-        // Initialize App on Load
-        window.onload = function() {
-            renderProducts(products);
-            updateCartUI();
-        };
+            if (list.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-10">Koi saman nahi mila.</p>`;
+                return;
+            }
 
-        // Render Products
-        function renderProducts(list) {
-            const grid = document.getElementById('productGrid');
-            grid.innerHTML = '';
+            list.forEach(item => {
+                grid.innerHTML += `
+                    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition p-4 border border-gray-100 flex flex-col justify-between">
+                        <div>
+                            <div class="relative overflow-hidden rounded-lg mb-3 h-40 bg-gray-100">
+                                <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                                <span class="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded font-bold">${item.unit}</span>
+                            </div>
+                            <span class="text-xs text-green-600 font-semibold uppercase tracking-wider">${item.category}</span>
+                            <h3 class="font-bold text-gray-800 text-base mb-1 mt-0.5">${item.name}</h3>
+                        </div>
+                        <div>
+                            <div class="flex items-baseline gap-2 mb-3">
+                                <span class="text-lg font-extrabold text-gray-900">₹${item.price}</span>
+                                <span class="text-xs text-gray-400 line-through">₹${item.oldPrice}</span>
+                            </div>
+                            <button onclick="addToCart(${item.id})" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-semibold text-sm transition flex items-center justify-center gap-2 shadow-sm">
+                                <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
 
-            if (!list || list.length === 0) {
-                grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-10">Koi saman nahi mila.</p>`;
-                return;
-            }
+        // Add to Cart Logic & Save to LocalStorage
+        function addToCart(id) {
+            const prod = products.find(p => p.id === id);
+            const exist = cart.find(item => item.id === id);
 
-            list.forEach(item => {
-                grid.innerHTML += `
-                    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition p-4 border border-gray-100 flex flex-col justify-between">
-                        <div>
-                            <div class="relative overflow-hidden rounded-lg mb-3 h-40 bg-gray-100">
-                                <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
-                                <span class="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded font-bold">${item.unit}</span>
-                            </div>
-                            <span class="text-xs text-green-600 font-semibold uppercase tracking-wider">${item.category}</span>
-                            <h3 class="font-bold text-gray-800 text-base mb-1 mt-0.5">${item.name}</h3>
-                        </div>
-                        <div>
-                            <div class="flex items-baseline gap-2 mb-3">
-                                <span class="text-lg font-extrabold text-gray-900">₹${item.price}</span>
-                                <span class="text-xs text-gray-400 line-through">₹${item.oldPrice}</span>
-                            </div>
-                            <button onclick="addToCart(${item.id})" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-semibold text-sm transition flex items-center justify-center gap-2 shadow-sm">
-                                <i class="fa-solid fa-cart-plus"></i> Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+            if (exist) {
+                exist.qty += 1;
+            } else {
+                cart.push({ ...prod, qty: 1 });
+            }
 
-        // Add to Cart
-        function addToCart(id) {
-            const prod = products.find(p => p.id === id);
-            const exist = cart.find(item => item.id === id);
+            saveCart();
+            updateCartUI();
+            toggleCart();
+        }
 
-            if (exist) {
-                exist.qty += 1;
-            } else {
-                cart.push({ ...prod, qty: 1 });
-            }
+        function saveCart() {
+            localStorage.setItem('kirana_cart', JSON.stringify(cart));
+        }
 
-            saveCart();
-            updateCartUI();
-            toggleCart();
-        }
+        // Cart Drawer Toggle
+        function toggleCart() {
+            const drawer = document.getElementById('cartDrawer');
+            const overlay = document.getElementById('cartOverlay');
+            drawer.classList.toggle('translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
 
-        function saveCart() {
-            localStorage.setItem('kirana_cart', JSON.stringify(cart));
-        }
+        // Update Cart Interface
+        function updateCartUI() {
+            const count = cart.reduce((acc, curr) => acc + curr.qty, 0);
+            document.getElementById('cartCount').innerText = count;
 
-        function toggleCart() {
-            const drawer = document.getElementById('cartDrawer');
-            const overlay = document.getElementById('cartOverlay');
-            drawer.classList.toggle('translate-x-full');
-            overlay.classList.toggle('hidden');
-        }
+            const list = document.getElementById('cartItemsList');
+            list.innerHTML = '';
 
-        function updateCartUI() {
-            const count = cart.reduce((acc, curr) => acc + curr.qty, 0);
-            document.getElementById('cartCount').innerText = count;
-            document.getElementById('adminOrderCount').innerText = ordersList.length;
+            let total = 0;
 
-            const list = document.getElementById('cartItemsList');
-            list.innerHTML = '';
+            if (cart.length === 0) {
+                list.innerHTML = `<p class="text-gray-500 text-center py-8">Aapka cart abhi khali hai.</p>`;
+            } else {
+                cart.forEach(item => {
+                    total += item.price * item.qty;
+                    list.innerHTML += `
+                        <div class="flex items-center gap-3 border-b pb-3">
+                            <img src="${item.image}" class="w-12 h-12 object-cover rounded">
+                            <div class="flex-1">
+                                <h4 class="font-bold text-xs text-gray-800">${item.name}</h4>
+                                <p class="text-xs text-green-600 font-semibold">₹${item.price}</p>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <button onclick="changeQty(${item.id}, -1)" class="w-5 h-5 border rounded flex items-center justify-center text-xs font-bold bg-gray-100">-</button>
+                                    <span class="text-xs font-medium">${item.qty}</span>
+                                    <button onclick="changeQty(${item.id}, 1)" class="w-5 h-5 border rounded flex items-center justify-center text-xs font-bold bg-gray-100">+</button>
+                                </div>
+                            </div>
+                            <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 text-sm"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    `;
+                });
+            }
 
-            let total = 0;
+            document.getElementById('cartTotal').innerText = `₹${total}`;
+        }
 
-            if (cart.length === 0) {
-                list.innerHTML = `<p class="text-gray-500 text-center py-8">Aapka cart abhi khali hai.</p>`;
-            } else {
-                cart.forEach(item => {
-                    total += item.price * item.qty;
-                    list.innerHTML += `
-                        <div class="flex items-center gap-3 border-b pb-3">
-                            <img src="${item.image}" class="w-12 h-12 object-cover rounded">
-                            <div class="flex-1">
-                                <h4 class="font-bold text-xs text-gray-800">${item.name}</h4>
-                                <p class="text-xs text-green-600 font-semibold">₹${item.price}</p>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <button onclick="changeQty(${item.id}, -1)" class="w-5 h-5 border rounded flex items-center justify-center text-xs font-bold bg-gray-100">-</button>
-                                    <span class="text-xs font-medium">${item.qty}</span>
-                                    <button onclick="changeQty(${item.id}, 1)" class="w-5 h-5 border rounded flex items-center justify-center text-xs font-bold bg-gray-100">+</button>
-                                </div>
-                            </div>
-                            <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 text-sm"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    `;
-                });
-            }
+        // Change Quantity
+        function changeQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            saveCart();
+            updateCartUI();
+        }
 
-            document.getElementById('cartTotal').innerText = `₹${total}`;
-        }
+        // Remove Item
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            saveCart();
+            updateCartUI();
+        }
 
-        function changeQty(id, delta) {
-            const item = cart.find(i => i.id === id);
-            if (item) {
-                item.qty += delta;
-                if (item.qty <= 0) {
-                    cart = cart.filter(i => i.id !== id);
-                }
-            }
-            saveCart();
-            updateCartUI();
-        }
+        // Filter Products
+        function selectCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if(btn.innerText === cat) {
+                    btn.classList.add('bg-green-600', 'text-white');
+                    btn.classList.remove('bg-gray-200', 'text-gray-700');
+                } else {
+                    btn.classList.remove('bg-green-600', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                }
+            });
+            filterProducts();
+        }
 
-        function removeFromCart(id) {
-            cart = cart.filter(i => i.id !== id);
-            saveCart();
-            updateCartUI();
-        }
+        function filterProducts() {
+            const query = (document.getElementById('searchInput').value || document.getElementById('mobileSearchInput').value || '').toLowerCase();
+            const filtered = products.filter(p => {
+                const matchCat = currentCategory === 'All' || p.category === currentCategory;
+                const matchSearch = p.name.toLowerCase().includes(query);
+                return matchCat && matchSearch;
+            });
+            renderProducts(filtered);
+        }
 
-        function selectCategory(cat) {
-            currentCategory = cat;
-            document.querySelectorAll('.cat-btn').forEach(btn => {
-                if(btn.innerText.includes(cat) || (cat === 'All' && btn.innerText === 'All')) {
-                    btn.classList.add('bg-green-600', 'text-white');
-                    btn.classList.remove('bg-gray-200', 'text-gray-700');
-                } else {
-                    btn.classList.remove('bg-green-600', 'text-white');
-                    btn.classList.add('bg-gray-200', 'text-gray-700');
-                }
-            });
-            filterProducts();
-        }
+        function filterProductsMobile() {
+            document.getElementById('searchInput').value = document.getElementById('mobileSearchInput').value;
+            filterProducts();
+        }
 
-        function filterProducts() {
-            const query = (document.getElementById('searchInput').value || document.getElementById('mobileSearchInput').value || '').toLowerCase();
-            const filtered = products.filter(p => {
-                const matchCat = currentCategory === 'All' || p.category === currentCategory;
-                const matchSearch = p.name.toLowerCase().includes(query);
-                return matchCat && matchSearch;
-            });
-            renderProducts(filtered);
-        }
+        // Modal Controls
+        function openCheckout() {
+            if (cart.length === 0) {
+                alert("Pehle cart mein saman jodein!");
+                return;
+            }
+            const drawer = document.getElementById('cartDrawer');
+            if(!drawer.classList.contains('translate-x-full')) {
+                toggleCart();
+            }
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
 
-        function filterProductsMobile() {
-            document.getElementById('searchInput').value = document.getElementById('mobileSearchInput').value;
-            filterProducts();
-        }
+        function closeCheckout() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
 
-        function openCheckout() {
-            if (cart.length === 0) {
-                alert("Pehle cart mein saman jodein!");
-                return;
-            }
-            const drawer = document.getElementById('cartDrawer');
-            if(!drawer.classList.contains('translate-x-full')) {
-                toggleCart();
-            }
-            document.getElementById('checkoutModal').classList.remove('hidden');
-        }
+        // WhatsApp Order Generation
+        function placeOrder(e) {
+            e.preventDefault();
+            const name = document.getElementById('custName').value;
+            const address = document.getElementById('custAddress').value;
+            const payment = document.getElementById('payMethod').value;
 
-        function closeCheckout() {
-            document.getElementById('checkoutModal').classList.add('hidden');
-        }
+            let orderText = `*Naya Order - Shree Ji Kirana*\n\n*Naam:* ${name}\n*Pata:* ${address}\n*Payment:* ${payment}\n\n*Saaman:* \n`;
+            
+            let total = 0;
+            cart.forEach(item => {
+                const cost = item.price * item.qty;
+                total += cost;
+                orderText += `- ${item.name} (${item.qty} ${item.unit}) : ₹${cost}\n`;
+            });
 
-        // Place Order
-        async function placeOrder(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing Order...`;
+            orderText += `\n*Kul Yog (Total): ₹${total}*`;
 
-            const name = document.getElementById('custName').value;
-            const phone = document.getElementById('custPhone').value;
-            const address = document.getElementById('custAddress').value;
-            const payMethod = document.getElementById('payMethod').value;
+            // Replace with your actual WhatsApp store number (with country code, e.g., 919876543210)
+            const storeNumber = "919876543210"; 
+            const url = `https://wa.me/${storeNumber}?text=${encodeURIComponent(orderText)}`;
 
-            let total = 0;
-            let itemsSummary = "";
+            // Clear cart & storage
+            cart = [];
+            saveCart();
+            updateCartUI();
+            closeCheckout();
 
-            cart.forEach(item => {
-                const itemTotal = item.price * item.qty;
-                total += itemTotal;
-                itemsSummary += `• ${item.name} x ${item.qty} = ₹${itemTotal}\n`;
-            });
+            // Open WhatsApp
+            window.open(url, '_blank');
+        }
 
-            const newOrder = {
-                id: 'ORD' + Date.now().toString().slice(-6),
-                date: new Date().toLocaleString(),
-                customer: { name, phone, address },
-                items: cart,
-                total: total,
-                payment: payMethod
-            };
-
-            ordersList.unshift(newOrder);
-            localStor
+        // Initialize Page
+        renderProducts(products);
+        updateCartUI();
+    </script>
+</body>
+</html>
