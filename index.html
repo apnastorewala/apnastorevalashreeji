@@ -1,353 +1,336 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shree Ji Kirana Store - Aapki Apni Dukan</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .cart-slide {
-            transition: transform 0.3s ease-in-out;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MegaStore - Aapka Apna E-Commerce Store</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .cart-slide {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col justify-between">
 
-    <!-- 1. Header / Navbar -->
-    <header class="sticky top-0 z-40 bg-white shadow-md">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-            <!-- Brand Logo -->
-            <a href="#" class="text-2xl font-extrabold text-green-600 flex items-center gap-2">
-                <i class="fa-solid fa-basket-shopping"></i> Shree Ji Kirana
-            </a>
+    <!-- 1. Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            <!-- Brand Logo -->
+            <a href="#" class="text-2xl font-extrabold text-indigo-600 flex items-center gap-2">
+                <i class="fa-solid fa-bag-shopping"></i> MegaStore
+            </a>
 
-            <!-- Search Bar -->
-            <div class="flex-1 max-w-md hidden sm:block relative">
-                <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Dal, Atta, Tel khojein..." 
-                       class="w-full pl-10 pr-4 py-2 border rounded-full border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm">
-                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400 text-sm"></i>
-            </div>
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-md hidden sm:block relative">
+                <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Products khojein..." 
+                       class="w-full pl-10 pr-4 py-2 border rounded-full border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400 text-sm"></i>
+            </div>
 
-            <div class="flex items-center gap-3">
-                <!-- Owner Orders Button (Flipkart Style Admin Panel) -->
-                <button onclick="openAdminModal()" class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-blue-700 transition flex items-center gap-1">
-                    <i class="fa-solid fa-box-archive"></i> Admin Orders (<span id="adminOrderCount">0</span>)
-                </button>
+            <!-- Cart Icon Button -->
+            <button onclick="toggleCart()" class="relative p-2 text-gray-700 hover:text-indigo-600 transition">
+                <i class="fa-solid fa-cart-shopping text-2xl"></i>
+                <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+            </button>
+        </div>
 
-                <!-- Cart Icon Button -->
-                <button onclick="toggleCart()" class="relative p-2 text-gray-700 hover:text-green-600 transition">
-                    <i class="fa-solid fa-cart-shopping text-2xl"></i>
-                    <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">0</span>
-                </button>
-            </div>
-        </div>
+        <!-- Mobile Search Bar -->
+        <div class="px-4 pb-3 sm:hidden">
+            <input type="text" id="mobileSearchInput" oninput="filterProductsMobile()" placeholder="Products khojein..." 
+                   class="w-full pl-10 pr-4 py-2 border rounded-full border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+        </div>
+    </header>
 
-        <!-- Mobile Search Bar -->
-        <div class="px-4 pb-3 sm:hidden">
-            <input type="text" id="mobileSearchInput" oninput="filterProductsMobile()" placeholder="Dal, Atta, Tel khojein..." 
-                   class="w-full pl-10 pr-4 py-2 border rounded-full border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm">
-        </div>
-    </header>
+    <!-- 2. Hero Banner -->
+    <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-12 px-4 text-center">
+        <h1 class="text-3xl md:text-5xl font-bold mb-3">Festival Season Sale! 🔥</h1>
+        <p class="text-indigo-100 text-base md:text-lg max-w-2xl mx-auto mb-6">Sabhi electronics, fashion aur home items par paayein 50% tak ki chhoot. Aaj hi order karein!</p>
+        <a href="#products" class="bg-white text-indigo-600 font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-gray-100 transition">Shop Now</a>
+    </section>
 
-    <!-- 2. Hero Banner -->
-    <section class="bg-gradient-to-r from-green-600 to-emerald-700 text-white py-12 px-4 text-center">
-        <h1 class="text-3xl md:text-5xl font-bold mb-3">Shuddh aur Taaza Rashan 🛒</h1>
-        <p class="text-green-100 text-base md:text-lg max-w-2xl mx-auto mb-6">Ghar baithe mangayein apni rozmarra ki zaroorat ka saaman. Tez home delivery uplabdh hai!</p>
-        <a href="#products" class="bg-white text-green-700 font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-gray-100 transition">Saaman Dekhein</a>
-    </section>
+    <!-- 3. Category Filter Pills -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow" id="products">
+        <div class="flex items-center justify-between flex-wrap gap-4 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Featured Products</h2>
+            <div class="flex gap-2 overflow-x-auto pb-2" id="categoryButtons">
+                <button onclick="selectCategory('All')" class="cat-btn bg-indigo-600 text-white px-4 py-1.5 rounded-full text-sm font-medium transition">All</button>
+                <button onclick="selectCategory('Electronics')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-indigo-600 hover:text-white px-4 py-1.5 rounded-full text-sm font-medium transition">Electronics</button>
+                <button onclick="selectCategory('Fashion')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-indigo-600 hover:text-white px-4 py-1.5 rounded-full text-sm font-medium transition">Fashion</button>
+                <button onclick="selectCategory('Home')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-indigo-600 hover:text-white px-4 py-1.5 rounded-full text-sm font-medium transition">Home</button>
+            </div>
+        </div>
 
-    <!-- 3. Category Filter Pills -->
-    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow" id="products">
-        <div class="flex items-center justify-between flex-wrap gap-4 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Daily Groceries</h2>
-            <div class="flex gap-2 overflow-x-auto pb-2" id="categoryButtons">
-                <button onclick="selectCategory('All')" class="cat-btn bg-green-600 text-white px-4 py-1.5 rounded-full text-sm font-medium transition">All</button>
-                <button onclick="selectCategory('Anaj & Dal')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-green-600 hover:text-white px-4 py-1.5 rounded-full text-sm font-medium transition">Anaj</button>
-                <button onclick="selectCategory('Tel & Masale')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-green-600 hover:text-white px-4 py-1.5 rounded-full text-sm font-medium transition">Tel & Masale</button>
-                <button onclick="selectCategory('Snacks')" class="cat-btn bg-gray-200 text-gray-700 hover:bg-green-600 hover:text-white px-4 py-1.5 rounded-full text-sm font-medium transition">Snacks</button>
-            </div>
-        </div>
+        <!-- Product Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="productGrid">
+            <!-- Products will be dynamically rendered via JavaScript -->
+        </div>
+    </main>
 
-        <!-- Product Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="productGrid">
-            <!-- Products rendered dynamically -->
-        </div>
-    </main>
+    <!-- 4. Shopping Cart Sidebar Overlay -->
+    <div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden transition-opacity" onclick="toggleCart()"></div>
 
-    <!-- 4. Shopping Cart Sidebar Overlay -->
-    <div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden transition-opacity" onclick="toggleCart()"></div>
+    <!-- Sliding Cart Drawer -->
+    <aside id="cartDrawer" class="fixed top-0 right-0 w-full sm:w-96 h-full bg-white z-50 shadow-2xl flex flex-col translate-x-full cart-slide">
+        <!-- Cart Header -->
+        <div class="p-4 bg-indigo-600 text-white flex justify-between items-center">
+            <h3 class="text-lg font-bold"><i class="fa-solid fa-cart-shopping"></i> Aapka Cart</h3>
+            <button onclick="toggleCart()" class="text-white hover:text-gray-200 text-xl"><i class="fa-solid fa-xmark"></i></button>
+        </div>
 
-    <!-- Sliding Cart Drawer -->
-    <aside id="cartDrawer" class="fixed top-0 right-0 w-full sm:w-96 h-full bg-white z-50 shadow-2xl flex flex-col translate-x-full cart-slide">
-        <!-- Cart Header -->
-        <div class="p-4 bg-green-600 text-white flex justify-between items-center">
-            <h3 class="text-lg font-bold"><i class="fa-solid fa-cart-shopping"></i> Aapka Cart</h3>
-            <button onclick="toggleCart()" class="text-white hover:text-gray-200 text-xl"><i class="fa-solid fa-xmark"></i></button>
-        </div>
+        <!-- Cart Items List -->
+        <div class="p-4 flex-1 overflow-y-auto space-y-4" id="cartItemsList">
+            <p class="text-gray-500 text-center py-8">Aapka cart abhi khali hai.</p>
+        </div>
 
-        <!-- Cart Items List -->
-        <div class="p-4 flex-1 overflow-y-auto space-y-4" id="cartItemsList">
-            <p class="text-gray-500 text-center py-8">Aapka cart abhi khali hai.</p>
-        </div>
+        <!-- Cart Footer -->
+        <div class="p-4 border-t bg-gray-50">
+            <div class="flex justify-between items-center text-lg font-bold mb-4">
+                <span>Total Amount:</span>
+                <span id="cartTotal" class="text-indigo-600">₹0</span>
+            </div>
+            <button onclick="openCheckout()" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">Proceed to Checkout</button>
+        </div>
+    </aside>
 
-        <!-- Cart Footer -->
-        <div class="p-4 border-t bg-gray-50">
-            <div class="flex justify-between items-center text-lg font-bold mb-4">
-                <span>Total Amount:</span>
-                <span id="cartTotal" class="text-green-600">₹0</span>
-            </div>
-            <button onclick="openCheckout()" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">Proceed to Checkout</button>
-        </div>
-    </aside>
+    <!-- 5. Checkout Modal -->
+    <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeCheckout()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-xl font-bold mb-4 text-gray-800">Order Complete Karein</h3>
+            
+            <form onsubmit="placeOrder(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" required class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Delivery Address</label>
+                    <textarea required rows="2" class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
+                    <select class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <option>Cash on Delivery (COD)</option>
+                        <option>UPI / Net Banking</option>
+                        <option>Debit / Credit Card</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition mt-2">Confirm Order</button>
+            </form>
+        </div>
+    </div>
 
-    <!-- 5. Checkout Modal -->
-    <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeCheckout()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-xl font-bold mb-4 text-gray-800">Order Complete Karein</h3>
-            
-            <form onsubmit="placeOrder(event)" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                    <input type="text" id="custName" required class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-green-500 outline-none">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                    <input type="tel" id="custPhone" required class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-green-500 outline-none" placeholder="10-digit mobile number">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Delivery Address & House No.</label>
-                    <textarea id="custAddress" required rows="2" class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-green-500 outline-none"></textarea>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
-                    <select id="payMethod" class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-green-500 outline-none">
-                        <option>Cash on Delivery (COD)</option>
-                        <option>Online UPI Payment</option>
-                    </select>
-                </div>
-                <button type="submit" id="submitBtn" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition mt-2 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-bag-shopping"></i> Place Order Now
-                </button>
-            </form>
-        </div>
-    </div>
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-gray-900 text-white px-4 py-2.5 rounded-lg shadow-lg hidden z-50 text-sm flex items-center gap-2">
+        <i class="fa-solid fa-circle-check text-green-400"></i> <span id="toastMsg">Product added!</span>
+    </div>
 
-    <!-- 6. Owner Admin Orders Modal (Website ke andar order dekhne ke liye) -->
-    <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[90vh] flex flex-col">
-            <div class="flex justify-between items-center mb-4 border-b pb-3">
-                <h3 class="text-xl font-bold text-gray-800"><i class="fa-solid fa-user-shield text-blue-600"></i> Owner Panel - All Orders</h3>
-                <button onclick="closeAdminModal()" class="text-gray-400 hover:text-gray-600 text-xl"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            
-            <div class="flex-1 overflow-y-auto space-y-4" id="adminOrdersList">
-                <!-- Orders will load here -->
-            </div>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-6 text-center text-sm border-t border-gray-700 mt-12">
+        <p>&copy; 2026 MegaStore. Sabhi adhikar surakshit hain.</p>
+    </footer>
 
-            <div class="mt-4 pt-3 border-t flex justify-between items-center">
-                <button onclick="clearAllOrders()" class="bg-red-100 text-red-600 px-4 py-2 rounded-lg text-xs font-semibold hover:bg-red-200 transition">Clear Local Orders</button>
-                <button onclick="closeAdminModal()" class="bg-gray-800 text-white px-5 py-2 rounded-lg text-sm font-semibold">Close</button>
-            </div>
-        </div>
-    </div>
+    <!-- JavaScript Logic -->
+    <script>
+        // Data Set
+        const products = [
+            { id: 1, name: "Wireless Headphones", category: "Electronics", price: 1499, oldPrice: 2999, rating: 4.5, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" },
+            { id: 2, name: "Smart Fitness Watch", category: "Electronics", price: 2499, oldPrice: 4999, rating: 4.3, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" },
+            { id: 3, name: "Casual Denim Jacket", category: "Fashion", price: 1899, oldPrice: 2599, rating: 4.7, image: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=400" },
+            { id: 4, name: "Running Sneakers", category: "Fashion", price: 1299, oldPrice: 1999, rating: 4.2, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400" },
+            { id: 5, name: "Stainless Water Bottle", category: "Home", price: 499, oldPrice: 899, rating: 4.6, image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400" },
+            { id: 6, name: "Desk Table Lamp", category: "Home", price: 899, oldPrice: 1499, rating: 4.4, image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400" },
+        ];
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-gray-300 py-6 text-center text-sm border-t border-gray-700 mt-12">
-        <p>&copy; 2026 Shree Ji Kirana Store. Sabhi adhikar surakshit hain.</p>
-    </footer>
+        let cart = [];
+        let currentCategory = 'All';
 
-    <!-- JavaScript Logic -->
-    <script>
-        // -------------------------------------------------------------
-        // 🔴 YAHAN APNA TELEGRAM BOT TOKEN AUR CHAT ID DAALEIN
-        // -------------------------------------------------------------
-        const TELEGRAM_BOT_TOKEN = "8955915195:AAELKsPmB8C0FOUZ8ru0J4FcnScQajJtfA8";
-        const TELEGRAM_CHAT_ID = "8391325461"; 
+        // Render Products
+        function renderProducts(list) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
 
-        // Kirana Product Inventory
-        const products = [
-            { id: 1, name: "Atta (5kg)", category: "Anaj & Dal", price: 200, oldPrice: 290, unit: "5 kg", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400" },
-            { id: 2, name: "Basmati Rice (1kg)", category: "Anaj & Dal", price: 95, oldPrice: 120, unit: "1 kg", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400" },
-            { id: 3, name: "Toor Dal / Arhar Dal (1kg)", category: "Anaj & Dal", price: 140, oldPrice: 160, unit: "1 kg", image: "https://images.unsplash.com/photo-1585998014293-21bb3457a410?w=400" },
-            { id: 4, name: "Fortune Mustard Oil (1L)", category: "Tel & Masale", price: 150, oldPrice: 175, unit: "1 Liter", image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400" },
-            { id: 5, name: "Tata Salt (1kg)", category: "Tel & Masale", price: 28, oldPrice: 30, unit: "1 kg", image: "https://images.unsplash.com/photo-1518112347513-74d98b470942?w=400" },
-            { id: 6, name: "Haldi / Turmeric Powder (200g)", category: "Tel & Masale", price: 45, oldPrice: 55, unit: "200 g", image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400" },
-            { id: 7, name: "Chings Namkeen / Snacks", category: "Snacks", price: 20, oldPrice: 25, unit: "Packet", image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400" },
-            { id: 8, name: "Brooke Bond Red Label Tea (250g)", category: "Snacks", price: 145, oldPrice: 160, unit: "250 g", image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400" }
-        ];
+            if (list.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-10">Koi product nahi mila.</p>`;
+                return;
+            }
 
-        // Local Storage
-        let cart = JSON.parse(localStorage.getItem('kirana_cart')) || [];
-        let ordersList = JSON.parse(localStorage.getItem('kirana_admin_orders')) || [];
-        let currentCategory = 'All';
+            list.forEach(item => {
+                grid.innerHTML += `
+                    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition p-4 border border-gray-100 flex flex-col justify-between">
+                        <div>
+                            <div class="relative overflow-hidden rounded-lg mb-3 h-48 bg-gray-100">
+                                <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                                <span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded font-bold">SALE</span>
+                            </div>
+                            <span class="text-xs text-indigo-600 font-semibold uppercase tracking-wider">${item.category}</span>
+                            <h3 class="font-bold text-gray-800 text-lg mb-1 mt-0.5">${item.name}</h3>
+                            <div class="flex items-center gap-1 text-yellow-400 text-xs mb-3">
+                                <i class="fa-solid fa-star"></i> <span>${item.rating}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-baseline gap-2 mb-3">
+                                <span class="text-xl font-extrabold text-gray-900">₹${item.price}</span>
+                                <span class="text-sm text-gray-400 line-through">₹${item.oldPrice}</span>
+                            </div>
+                            <button onclick="buyNow(${item.id})" class="w-full bg-amber-500 hover:bg-amber-600 text-white py-2 rounded-lg font-semibold text-sm transition flex items-center justify-center gap-2 shadow-sm">
+                                <i class="fa-solid fa-bolt"></i> Buy Now
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
 
-        // Render Products
-        function renderProducts(list) {
-            const grid = document.getElementById('productGrid');
-            grid.innerHTML = '';
+        // Buy Now Logic
+        function buyNow(id) {
+            const prod = products.find(p => p.id === id);
+            const exist = cart.find(item => item.id === id);
 
-            if (list.length === 0) {
-                grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-10">Koi saman nahi mila.</p>`;
-                return;
-            }
+            if (exist) {
+                exist.qty += 1;
+            } else {
+                cart.push({ ...prod, qty: 1 });
+            }
 
-            list.forEach(item => {
-                grid.innerHTML += `
-                    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition p-4 border border-gray-100 flex flex-col justify-between">
-                        <div>
-                            <div class="relative overflow-hidden rounded-lg mb-3 h-40 bg-gray-100">
-                                <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
-                                <span class="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded font-bold">${item.unit}</span>
-                            </div>
-                            <span class="text-xs text-green-600 font-semibold uppercase tracking-wider">${item.category}</span>
-                            <h3 class="font-bold text-gray-800 text-base mb-1 mt-0.5">${item.name}</h3>
-                        </div>
-                        <div>
-                            <div class="flex items-baseline gap-2 mb-3">
-                                <span class="text-lg font-extrabold text-gray-900">₹${item.price}</span>
-                                <span class="text-xs text-gray-400 line-through">₹${item.oldPrice}</span>
-                            </div>
-                            <button onclick="addToCart(${item.id})" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-semibold text-sm transition flex items-center justify-center gap-2 shadow-sm">
-                                <i class="fa-solid fa-cart-plus"></i> Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+            updateCartUI();
+            openCheckout();
+        }
 
-        // Add to Cart
-        function addToCart(id) {
-            const prod = products.find(p => p.id === id);
-            const exist = cart.find(item => item.id === id);
+        // Cart Drawer Toggle
+        function toggleCart() {
+            const drawer = document.getElementById('cartDrawer');
+            const overlay = document.getElementById('cartOverlay');
+            drawer.classList.toggle('translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
 
-            if (exist) {
-                exist.qty += 1;
-            } else {
-                cart.push({ ...prod, qty: 1 });
-            }
+        // Update Cart Interface
+        function updateCartUI() {
+            const count = cart.reduce((acc, curr) => acc + curr.qty, 0);
+            document.getElementById('cartCount').innerText = count;
 
-            saveCart();
-            updateCartUI();
-            toggleCart();
-        }
+            const list = document.getElementById('cartItemsList');
+            list.innerHTML = '';
 
-        function saveCart() {
-            localStorage.setItem('kirana_cart', JSON.stringify(cart));
-        }
+            let total = 0;
 
-        function toggleCart() {
-            const drawer = document.getElementById('cartDrawer');
-            const overlay = document.getElementById('cartOverlay');
-            drawer.classList.toggle('translate-x-full');
-            overlay.classList.toggle('hidden');
-        }
+            if (cart.length === 0) {
+                list.innerHTML = `<p class="text-gray-500 text-center py-8">Aapka cart abhi khali hai.</p>`;
+            } else {
+                cart.forEach(item => {
+                    total += item.price * item.qty;
+                    list.innerHTML += `
+                        <div class="flex items-center gap-3 border-b pb-3">
+                            <img src="${item.image}" class="w-14 h-14 object-cover rounded">
+                            <div class="flex-1">
+                                <h4 class="font-bold text-sm text-gray-800">${item.name}</h4>
+                                <p class="text-xs text-indigo-600 font-semibold">₹${item.price}</p>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <button onclick="changeQty(${item.id}, -1)" class="w-6 h-6 border rounded flex items-center justify-center text-sm font-bold bg-gray-100">-</button>
+                                    <span class="text-sm font-medium">${item.qty}</span>
+                                    <button onclick="changeQty(${item.id}, 1)" class="w-6 h-6 border rounded flex items-center justify-center text-sm font-bold bg-gray-100">+</button>
+                                </div>
+                            </div>
+                            <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 text-sm"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    `;
+                });
+            }
 
-        function updateCartUI() {
-            const count = cart.reduce((acc, curr) => acc + curr.qty, 0);
-            document.getElementById('cartCount').innerText = count;
-            document.getElementById('adminOrderCount').innerText = ordersList.length;
+            document.getElementById('cartTotal').innerText = `₹${total}`;
+        }
 
-            const list = document.getElementById('cartItemsList');
-            list.innerHTML = '';
+        // Change Quantity
+        function changeQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartUI();
+        }
 
-            let total = 0;
+        // Remove Item
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            updateCartUI();
+        }
 
-            if (cart.length === 0) {
-                list.innerHTML = `<p class="text-gray-500 text-center py-8">Aapka cart abhi khali hai.</p>`;
-            } else {
-                cart.forEach(item => {
-                    total += item.price * item.qty;
-                    list.innerHTML += `
-                        <div class="flex items-center gap-3 border-b pb-3">
-                            <img src="${item.image}" class="w-12 h-12 object-cover rounded">
-                            <div class="flex-1">
-                                <h4 class="font-bold text-xs text-gray-800">${item.name}</h4>
-                                <p class="text-xs text-green-600 font-semibold">₹${item.price}</p>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <button onclick="changeQty(${item.id}, -1)" class="w-5 h-5 border rounded flex items-center justify-center text-xs font-bold bg-gray-100">-</button>
-                                    <span class="text-xs font-medium">${item.qty}</span>
-                                    <button onclick="changeQty(${item.id}, 1)" class="w-5 h-5 border rounded flex items-center justify-center text-xs font-bold bg-gray-100">+</button>
-                                </div>
-                            </div>
-                            <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 text-sm"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    `;
-                });
-            }
+        // Filter Products
+        function selectCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if(btn.innerText === cat) {
+                    btn.classList.add('bg-indigo-600', 'text-white');
+                    btn.classList.remove('bg-gray-200', 'text-gray-700');
+                } else {
+                    btn.classList.remove('bg-indigo-600', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                }
+            });
+            filterProducts();
+        }
 
-            document.getElementById('cartTotal').innerText = `₹${total}`;
-        }
+        function filterProducts() {
+            const query = (document.getElementById('searchInput').value || document.getElementById('mobileSearchInput').value || '').toLowerCase();
+            const filtered = products.filter(p => {
+                const matchCat = currentCategory === 'All' || p.category === currentCategory;
+                const matchSearch = p.name.toLowerCase().includes(query);
+                return matchCat && matchSearch;
+            });
+            renderProducts(filtered);
+        }
 
-        function changeQty(id, delta) {
-            const item = cart.find(i => i.id === id);
-            if (item) {
-                item.qty += delta;
-                if (item.qty <= 0) {
-                    cart = cart.filter(i => i.id !== id);
-                }
-            }
-            saveCart();
-            updateCartUI();
-        }
+        function filterProductsMobile() {
+            document.getElementById('searchInput').value = document.getElementById('mobileSearchInput').value;
+            filterProducts();
+        }
 
-        function removeFromCart(id) {
-            cart = cart.filter(i => i.id !== id);
-            saveCart();
-            updateCartUI();
-        }
+        // Modal Controls
+        function openCheckout() {
+            if (cart.length === 0) {
+                alert("Pehle cart mein items jodein!");
+                return;
+            }
+            const drawer = document.getElementById('cartDrawer');
+            if(!drawer.classList.contains('translate-x-full')) {
+                toggleCart();
+            }
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
 
-        function selectCategory(cat) {
-            currentCategory = cat;
-            document.querySelectorAll('.cat-btn').forEach(btn => {
-                if(btn.innerText.includes(cat) || (cat === 'All' && btn.innerText === 'All')) {
-                    btn.classList.add('bg-green-600', 'text-white');
-                    btn.classList.remove('bg-gray-200', 'text-gray-700');
-                } else {
-                    btn.classList.remove('bg-green-600', 'text-white');
-                    btn.classList.add('bg-gray-200', 'text-gray-700');
-                }
-            });
-            filterProducts();
-        }
+        function closeCheckout() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
 
-        function filterProducts() {
-            const query = (document.getElementById('searchInput').value || document.getElementById('mobileSearchInput').value || '').toLowerCase();
-            const filtered = products.filter(p => {
-                const matchCat = currentCategory === 'All' || p.category === currentCategory;
-                const matchSearch = p.name.toLowerCase().includes(query);
-                return matchCat && matchSearch;
-            });
-            renderProducts(filtered);
-        }
+        function placeOrder(e) {
+            e.preventDefault();
+            alert("Dhanyawad! Aapka order safaltapoorvak place ho gaya hai.");
+            cart = [];
+            updateCartUI();
+            closeCheckout();
+        }
 
-        function filterProductsMobile() {
-            document.getElementById('searchInput').value = document.getElementById('mobileSearchInput').value;
-            filterProducts();
-        }
+        // Toast Helper
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2500);
+        }
 
-        function openCheckout() {
-            if (cart.length === 0) {
-                alert("Pehle cart mein saman jodein!");
-                return;
-            }
-            const drawer = document.getElementById('cartDrawer');
-            if(!drawer.classList.contains('translate-x-full')) {
-                toggleCart();
-            }
-            document.getElementById('checkoutModal').classList.remove('hidden');
-        }
-
-        function closeCheckout() {
-            document.getElementById('checkoutModal').classList.add('hidden');
-        }
-
-        // -------------------------------------------------------------
-        // PLACE ORDER WITH TELEGRAM NOTIFICATION TO OWNER
-        // -------------------------------------------------------------
-        async function placeOrder(e) {
-    
+        // Initialize Page
+        renderProducts(products);
+    </script>
+</body>
+</html>
